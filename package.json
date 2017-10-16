@@ -1,0 +1,45 @@
+{
+  "name": "stagram",
+  "version": "1.0.0",
+  "description": "\"simple stagram project with satcheljs\"",
+  "main": "index.js",
+  "author": "dmitryk-dk",
+  "license": "MIT",
+  "scripts": {
+    "build": "rm -rf ./build && NODE_ENV=production webpack",
+    "build-dev": "rm -rf ./build && NODE_ENV=development webpack",
+    "watch": "rm -rf ./build && NODE_ENV=production webpack",
+    "watch-dev": "rm -rf ./build && NODE_ENV=development webpack-dev-server",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.6.0",
+    "babel-preset-react": "^6.24.1",
+    "css-loader": "^0.28.7",
+    "extract-text-webpack-plugin": "^3.0.1",
+    "html-webpack-plugin": "^2.30.1",
+    "mobx": "^3.3.1",
+    "mobx-react": "^4.3.3",
+    "node-sass": "^4.5.3",
+    "progress-bar-webpack-plugin": "^1.10.0",
+    "react-addons-css-transition-group": "^15.6.2",
+    "react-hot-loader": "^3.0.0",
+    "react-router-dom": "^4.2.2",
+    "sass-loader": "^6.0.6",
+    "satcheljs": "^3.1.0",
+    "satcheljs-react-devtools": "^2.15.0",
+    "satcheljs-trace": "^2.15.0",
+    "style-loader": "^0.19.0",
+    "webpack": "^3.7.1",
+    "webpack-dev-server": "^2.9.1",
+    "webpack-notifier": "^1.5.0"
+  },
+  "dependencies": {
+    "path": "^0.12.7",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0"
+  }
+}
