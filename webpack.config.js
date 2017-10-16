@@ -65,6 +65,12 @@ module.exports = {
                 })
             ] : []
     ),
+    resolve: {
+        modules: [
+            path.resolve(__dirname, 'node_modules'),
+        ],
+        extensions: ['.js', '.jsx', '.scss', '.json'],
+    },
     devServer: {
         port: 3030
     },
