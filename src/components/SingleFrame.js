@@ -18,7 +18,7 @@ const SingleFrame = ({match}) => {
     return (
         <div className="single-photo">
             <Photo post={post}/>
-            <Comments />
+            <Comments commentId={post.code}/>
         </div>
     );
 };

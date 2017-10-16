@@ -4,14 +4,21 @@ import getStore from '../store/store';
 import {observer} from 'mobx-react';
 
 
-const Comments = () => {
+const Comments = ({commentId}) => {
 
     const store = getStore();
     const comments = store.comments;
+    console.log(commentId);
 
     return (
         <div className="comments">
-            {Object.keys(comments).map(() => <Comment />)}
+            {
+                Object.keys(comments).map(
+                    (comment) => comment === commentId ?
+                        comments[commentId].map(comment => <Comment comment={comment}/>) :
+                            null
+                )
+            }
             <form
                 className="comment-form"
                 onSubmit={() => console.log('submit')}>
