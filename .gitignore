@@ -204,5 +204,6 @@ Temporary Items
 
 #user defin directory
 build
+public
 yarn.lock
 
