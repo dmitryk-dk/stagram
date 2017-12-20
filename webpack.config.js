@@ -9,9 +9,9 @@ const WebpackNotifierPlugin = require('webpack-notifier');
 module.exports = {
     entry: ['babel-polyfill',path.resolve(__dirname + '/src/index.js')],
     output: {
-        path: path.resolve(__dirname + '/build'),
+        path: path.resolve(__dirname + '/public'),
         filename: 'static/js/[name].[hash:8].js',
-        //publicPath: '/'
+        publicPath: '/public'
     },
     module: {
         rules: [

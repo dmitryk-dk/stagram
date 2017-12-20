@@ -6,10 +6,10 @@
   "author": "dmitryk-dk",
   "license": "MIT",
   "scripts": {
-    "build": "rm -rf ./build && NODE_ENV=production webpack && cd server && go run main.go",
-    "build-dev": "rm -rf ./build && NODE_ENV=development webpack",
-    "watch": "rm -rf ./build && NODE_ENV=production webpack",
-    "watch-dev": "rm -rf ./build && NODE_ENV=development webpack-dev-server",
+    "build": "rm -rf ./public && NODE_ENV=production webpack && cd server && go run main.go",
+    "build-dev": "rm -rf ./public && NODE_ENV=development webpack",
+    "watch": "rm -rf ./public && NODE_ENV=production webpack",
+    "watch-dev": "rm -rf ./public && NODE_ENV=development webpack-dev-server",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {

@@ -1,42 +1,42 @@
 package main
 
 import (
-	"fmt"
+	"encoding/json"
+	//"fmt"
+	"html/template"
 	"log"
+	"net/http"
 	"os"
 	"os/signal"
 	"syscall"
-	"net/http"
-
-	"github.com/gorilla/handlers"
-	"github.com/gorilla/mux"
-	appHandlers "github.com/dmitryk-dk/stagram/server/handlers"
+	//"github.com/gorilla/handlers"
+	//"github.com/gorilla/mux"
+	//appHandlers "github.com/dmitryk-dk/stagram/server/handlers"
+	"github.com/dmitryk-dk/stagram/server/data"
 )
+
+type Data struct {
+	Posts    interface{} `json:"posts"`
+	Comments interface{} `json:"comments"`
+}
+
+var tmpl *template.Template
+
+func init() {
+	tmpl = template.Must(template.ParseGlob("../public/index.html"))
+}
 
 func main() {
 	// listening port
-	const port = "3000"
-	// init mux router
-	router := mux.NewRouter()
-	// init index.html
-	router.Handle("/", http.FileServer(http.Dir("../build/")))
-
-	// response static data
-	router.PathPrefix("/").Handler(
-		http.StripPrefix("/",
-		http.FileServer(http.Dir("../build/"))))
-	fmt.Printf("Running server on port: %s\n Type Ctr-c to shutdown server.\n", port)
-	portConn := fmt.Sprintf(":%s", port)
-	// routes handlers
-	router.Handle("/", appHandlers.StatusHandler()).Methods("GET")
-	router.Handle("/posts", appHandlers.PostsHandler()).Methods("GET")
-	//router.Handle("/products/{slug}/feedback", appHandlers.AddFeedbackHandler()).Methods("Post")
-	router.Handle("/login", appHandlers.LoginHandler()).Methods("POST")
-
+	const port = ":3000"
+	fs := http.FileServer(http.Dir("../public"))
+	http.Handle("/public/", http.StripPrefix("/public/", fs))
+	//start server
+	http.Handle("/", http.HandlerFunc(serveTemplate))
+	http.Handle("/favicon.ico", http.NotFoundHandler())
 	//stop server
 	prepareShutdown()
-	//start server
-	http.ListenAndServe(portConn, handlers.LoggingHandler(os.Stdout, router))
+	http.ListenAndServe(port, nil)
 }
 
 func prepareShutdown() {
@@ -49,3 +49,13 @@ func prepareShutdown() {
 	}()
 }
 
+func serveTemplate(w http.ResponseWriter, r *http.Request) {
+	responsData := Data{
+		data.Posts,
+		data.PostsComments,
+	}
+	//fmt.Println(responsData)
+	jsonData, _ := json.Marshal(responsData)
+	//fmt.Println(jsonData)
+	tmpl.ExecuteTemplate(w, "index.html",string(jsonData))
+}

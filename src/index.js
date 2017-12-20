@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/App';
 import css from './styles/style.scss';
+import initData from './actions/initData';
 
 // satcheljs components
 import {trace} from 'satcheljs-trace';
@@ -20,6 +21,13 @@ const traceMiddleware = (next, actionMessage) =>  {
     console.log("Dispatching action: " + actionMessage.type);
     next(actionMessage);
 };
+
+const getInitData = () => {
+    const reactContainer = document.getElementById('app')
+    const rawData = reactContainer.getAttribute('data-react')
+    const data = JSON.parse(rawData);
+    initData(data)
+}
 
 const render = Component => {
     ReactDOM.render(
@@ -43,7 +51,7 @@ const init =() => {
 
     // Render the app
     render(App);
-
+    getInitData();
     if (module.hot) {
         module.hot.accept('./components/App', () => { render(App) });
     }

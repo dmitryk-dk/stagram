@@ -1,11 +1,11 @@
 package data
 
 type Post struct {
-	Code string
-	Caption string
-	Likes int32
-	Id string
-	DisplaySrc string
+	Code       string `json:"code"`
+	Caption    string `json:"caption"`
+	Likes      int32  `json:"likes"`
+	Id         string `json:"id"`
+	DisplaySrc string `json:"display_src"`
 }
 
 var Posts = []Post{
