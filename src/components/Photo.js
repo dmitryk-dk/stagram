@@ -10,9 +10,7 @@ const Photo = ({post}) => {
 
     const store = getStore();
     const comments = store.comments;
-    //console.log("post ->>", post);
-    console.log("code",post.code);
-    console.log('comment ->>', comments);
+    
     return (
         <figure className="grid-figure" key={post.id}>
             <div className="grid-photo-wrap">

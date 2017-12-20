@@ -6,20 +6,17 @@ type Comment struct {
 }
 
 type Comments struct {
-	Comment []Comment
+	//Comment []Comment
 }
 
-var PostsComments = map[string]Comments{
-	"BAhvZrRwcfu": Comments{
-		Comment: []Comment{
+var PostsComments = map[string][]Comment{
+	"BAhvZrRwcfu": []Comment{
 				Comment{
 					Text:"Totally need to try this.",
 					User: "heavymetaladam",
 				},
 			},
-		},
-	"BAcyDyQwcXX": Comments{
-		Comment: []Comment{
+	"BAcyDyQwcXX": []Comment{
 			Comment{
 				Text:"Wes. WE should have lunch.",
 				User: "jdaveknox",
@@ -37,9 +34,7 @@ var PostsComments = map[string]Comments{
 				User: "willowtreemegs",
 			},
 		},
-	},
-	"BAPIPRjQce9": Comments{
-		Comment: []Comment{
+	"BAPIPRjQce9": []Comment{
 			Comment{
 				Text:"Those are cute! They're like silver dollar pancakes.",
 				User: "rrsimonsen",
@@ -77,7 +72,4 @@ var PostsComments = map[string]Comments{
 				User: "world_greg",
 			},
 		},
-	},
-}
-
-
+	}

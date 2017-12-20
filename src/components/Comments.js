@@ -8,7 +8,7 @@ const Comments = ({commentId}) => {
 
     const store = getStore();
     const comments = store.comments;
-    console.log('commentsId', commentId)
+
     return (
         <div className="comments">
             {
