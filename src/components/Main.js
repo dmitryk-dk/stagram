@@ -1,19 +1,21 @@
 import React from 'react';
 import {observer} from 'mobx-react';
-import {Link} from 'react-router-dom';
+import {Link, Route, Switch, withRouter} from 'react-router-dom';
+import Single from './SingleFrame.js';
+import PhotoGrid from './PhotoGrid.js';
+import Signup from './Signup';
 
 const Main = () => (
     <div>
-        <h1>
-            <Link to="/">Reduxstagram</Link>
-        </h1>
-        <h1>
-            <Link to="/posts">Posts</Link>
-        </h1>
-        <h1>
-            <Link to="/signup">Signup</Link>
-        </h1>
+        <Link to="/posts">
+            <h1>Danger! Posts</h1>
+        </Link>
+        <Switch>
+            <Route exact path="/posts" component={PhotoGrid} />
+            <Route exact path="/view/:postId" component={Single} />
+            <Route exact path="/signup" component={Signup} />
+        </Switch>
     </div>
 );
 
-export default observer(Main);
+export default withRouter(observer(Main));

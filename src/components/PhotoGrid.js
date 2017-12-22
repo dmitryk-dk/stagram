@@ -10,7 +10,7 @@ const PhotoGrid = () => {
 
     return (
         <div className="photo-grid">
-            {posts.map((post) => <Photo post={post}/>)}
+            {posts.map((post, i) => <Photo post={post} key={i}/>)}
         </div>
     );
 };
