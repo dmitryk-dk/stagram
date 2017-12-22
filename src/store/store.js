@@ -3,6 +3,7 @@ import {createStore} from 'satcheljs';
 // Subscribe to mutators
 import '../mutators/incrementLike';
 import '../mutators/initData';
+import '../mutators/formFieldChange';
 
 // const comments = {
 //     "BAhvZrRwcfu":[
@@ -478,7 +479,9 @@ import '../mutators/initData';
 
 const sampleData = {
     comments: {},
-    posts: []
+    posts: [],
+    login: null,
+    password: null,
 };
 
 export default createStore('StagramStore', sampleData);

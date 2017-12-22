@@ -20,7 +20,7 @@ module.exports = {
                 loader: 'babel-loader',
                 query: {
                     babelrc: false,
-                    presets: ['babel-preset-react', 'env'],
+                    presets: ['babel-preset-react', 'env', 'stage-2'],
                     minified: true
                 },
                 exclude: /node_modules/
@@ -49,6 +49,13 @@ module.exports = {
             'process.env': {
                 NODE_ENV: JSON.stringify(process.env.NODE_ENV)
             }
+        }),
+        // init bootstrap plugins
+        new webpack.ProvidePlugin({
+            $: 'jquery',
+            jQuery: 'jquery',
+            'window.jQuery': 'jquery',
+            Popper: ['popper.js', 'default'],
         }),
         new WebpackNotifierPlugin({
             alwaysNotify: true

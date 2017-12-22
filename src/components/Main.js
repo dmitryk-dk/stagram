@@ -10,6 +10,9 @@ const Main = () => (
         <h1>
             <Link to="/posts">Posts</Link>
         </h1>
+        <h1>
+            <Link to="/signup">Signup</Link>
+        </h1>
     </div>
 );
 
