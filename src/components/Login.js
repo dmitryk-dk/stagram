@@ -2,6 +2,7 @@ import React from 'react';
 import {Redirect, Link} from 'react-router-dom';
 import getStore from '../store/store';
 import formFieldChange from '../actions/formFieldChange';
+import {loginRequest} from '../actions/login';
 import {observer} from 'mobx-react';
 
 const Login = () => {
@@ -12,7 +13,7 @@ const Login = () => {
     return (
         <div className={'d-flex align-items-center justify-content-center flex-column'}>
             <h1>Reduxstagram</h1>
-            <form onSubmit={(event) => submit(event, login, password)} >
+            <form onSubmit={(e) => submit(e)} >
                 <div className="form-group">
                     <label htmlFor="login">Login</label>
                     <input 
@@ -51,8 +52,8 @@ const Login = () => {
     );
 };
 
-const submit = (event, login, password) => {
-    console.log(login, password);
+const submit = (event) => {
+    loginRequest();
     event.preventDefault();
 }
 

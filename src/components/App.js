@@ -4,6 +4,10 @@ import Main from './Main';
 import Login from './Login';
 import PrivateRoute from './PrivatRoute';
 import {observer} from 'mobx-react';
+import getStore from '../store/store';
+
+const store = getStore();
+const isAuthed = store.isAuthed;
 
 const App = () => (
     <div className={'container-fluid'}>
@@ -11,7 +15,7 @@ const App = () => (
             <div className={'col-sm-12'}>
                 <Switch>
                     <Route exact path="/login" component={Login} />
-                    <PrivateRoute path="/" authed={true} component={Main}/>
+                    <PrivateRoute path="/" authed={isAuthed} component={Main}/>
                 </Switch>
             </div>
         </div>

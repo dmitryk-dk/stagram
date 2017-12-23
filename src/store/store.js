@@ -4,6 +4,9 @@ import {createStore} from 'satcheljs';
 import '../mutators/incrementLike';
 import '../mutators/initData';
 import '../mutators/formFieldChange';
+import '../mutators/login';
+
+import '../orchestrators/login';
 
 // const comments = {
 //     "BAhvZrRwcfu":[
@@ -482,6 +485,7 @@ const sampleData = {
     posts: [],
     login: null,
     password: null,
+    isAuthed: false,
 };
 
 export default createStore('StagramStore', sampleData);
