@@ -1,6 +1,7 @@
 import {action} from 'satcheljs';
 
-export default action('init', ({posts, comments}) => ({
+export default action('init', ({posts, comments, isAuthed}) => ({
     posts,
-    comments
+    comments,
+    isAuthed,
 }));

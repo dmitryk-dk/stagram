@@ -5,8 +5,7 @@ import getStore from '../store/store';
 
 orchestrator(loginRequest, async () => {
     const store = getStore();
-    const body = {login: store.login, passwrod: store.password};
+    const body = {login: store.login, password: store.password};
     await login(body)
-            .then(() => loginSuccess())
-            .catch(()=>loginFail());
+            .then((resp)=> resp.ok ? loginSuccess(): loginFail());
 });
