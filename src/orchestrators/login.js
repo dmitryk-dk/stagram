@@ -7,7 +7,6 @@ orchestrator(loginRequest, async () => {
     const store = getStore();
     const body = {login: store.login, passwrod: store.password};
     await login(body)
-            
+            .then(() => loginSuccess())
             .catch(()=>loginFail());
-            loginSuccess()
 });

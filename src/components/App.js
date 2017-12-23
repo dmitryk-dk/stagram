@@ -6,16 +6,13 @@ import PrivateRoute from './PrivatRoute';
 import {observer} from 'mobx-react';
 import getStore from '../store/store';
 
-const store = getStore();
-const isAuthed = store.isAuthed;
-
 const App = () => (
     <div className={'container-fluid'}>
         <div className={'row'}>
             <div className={'col-sm-12'}>
                 <Switch>
                     <Route exact path="/login" component={Login} />
-                    <PrivateRoute path="/" authed={isAuthed} component={Main}/>
+                    <PrivateRoute path="/" authed={getStore().isAuthed} component={Main}/>
                 </Switch>
             </div>
         </div>
