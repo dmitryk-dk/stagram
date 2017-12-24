@@ -10,9 +10,16 @@ const Login = () => {
     const store = getStore();
     const login = store.login;
     const password = store.password;
+    const isAuthed = store.isAuthed;
     return (
         <div className={'d-flex align-items-center justify-content-center flex-column'}>
             <h1>Reduxstagram</h1>
+            {
+                !isAuthed ?  
+                    <div className={'alert alert-danger'}>
+                        Sorry, we can't find your account! Please signup to our application
+                    </div>: null
+            }
             <form onSubmit={(e) => submit(e)} >
                 <div className="form-group">
                     <label htmlFor="login">Login</label>
@@ -22,7 +29,7 @@ const Login = () => {
                         className="form-control" 
                         id="login" 
                         aria-describedby="loginHelp" 
-                        placeholder="Enter login"
+                        placeholder="Enter email"
                         value={login}
                         onChange={(e) => formFieldChange(e.target)} 
                     />

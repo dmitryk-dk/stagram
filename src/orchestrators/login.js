@@ -6,6 +6,9 @@ import getStore from '../store/store';
 orchestrator(loginRequest, async () => {
     const store = getStore();
     const body = {login: store.login, password: store.password};
-    await login(body)
-            .then((resp)=> resp.ok ? loginSuccess(): loginFail());
+    const url = store.endpoints.login;
+    await login(url, body)
+            .then((resp)=> {
+                resp.ok ? loginSuccess(): loginFail()
+            });
 });

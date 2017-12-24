@@ -5,12 +5,8 @@ import { createHashHistory } from 'history';
 
 const history = createHashHistory();
 
-mutator(initData, ({posts, comments, isAuthed}) => {
+mutator(initData, ({endpoints, isAuthed}) => {
     const store = getStore();
-    store.posts = posts;
-    store.comments = comments;
+    store.endpoints = endpoints;
     store.isAuthed = isAuthed;
-    if (isAuthed) {
-        history.replace('/');
-    }
 });

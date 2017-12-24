@@ -15,3 +15,21 @@ export async function post (url, body) {
         }
     );
 }
+
+export async function get (url) {
+    const headers = {
+        'X-Requested-With': 'XMLHttpRequest',
+        'Content-Type':     'application/json',
+        'Accept':           'application/json',
+    };
+    const response = await fetch(
+        url,
+        {
+            method: 'get',
+            credentials: 'same-origin',
+            redirect: 'manual',
+            headers: headers,
+        }
+    );
+    return await response.json();
+}

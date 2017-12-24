@@ -29,10 +29,28 @@ type Credentials struct {
 var dbUsers = map[string]user{}
 var dbSessions = map[string]string{}
 
-type Data struct {
+type Posts struct {
 	Posts    interface{} `json:"posts"`
+}
+
+type Comments struct {
 	Comments interface{} `json:"comments"`
-	IsAuthed bool 		 `json:"isAuthed"`
+}
+
+type Endpoints struct {
+	Login    string `json:"login"`
+	Posts 	 string `json:"posts"`
+	Comments string `json:"comments"`
+	Signup 	 string `json:"signup"`
+}
+
+type Authorization struct {
+	IsAuthed bool `json:"isAuthed"`
+}
+
+type InitData struct {
+	Endpoints `json:"endpoints"`
+	Authorization
 }
 
 var tmpl *template.Template
@@ -51,6 +69,8 @@ func main() {
 	//start server
 	http.Handle("/", http.HandlerFunc(serveTemplate))
 	http.Handle("/login", http.HandlerFunc(login))
+	http.Handle("/posts",http.HandlerFunc(posts))
+	http.Handle("/comments", http.HandlerFunc(comments))
 	http.Handle("/favicon.ico", http.NotFoundHandler())
 	//stop server
 	prepareShutdown()
@@ -69,12 +89,23 @@ func prepareShutdown() {
 
 func serveTemplate(w http.ResponseWriter, req *http.Request) {
 	isAuthed := alreadyLoggedIn(req)
-	responsData := Data{
-		data.Posts,
-		data.PostsComments,
-		isAuthed,
+	// responsData := Data{
+	// 	data.Posts,
+	// 	data.PostsComments,
+	// 	isAuthed,
+	// }
+	endpoints := InitData{
+		Endpoints {
+			Login: "/login",
+			Signup: "/signup",
+			Posts: "/posts",
+			Comments: "/comments",
+		},
+		Authorization{
+			IsAuthed: isAuthed,
+		},
 	}
-	jsonData, _ := json.Marshal(responsData)
+	jsonData, _ := json.Marshal(endpoints)
 	tmpl.ExecuteTemplate(w, "index.html",string(jsonData))
 }
 
@@ -127,4 +158,34 @@ func alreadyLoggedIn(req *http.Request) bool {
 	un := dbSessions[c.Value]
 	_, ok := dbUsers[un]
 	return ok
+}
+
+func posts(w http.ResponseWriter, req *http.Request) {
+	if !alreadyLoggedIn(req) {
+		http.Redirect(w, req, "/", http.StatusForbidden)
+		return
+	}
+
+	if req.Method == http.MethodGet {
+		posts := Posts{
+			Posts: data.Posts,
+		}
+		jsonData, _ := json.Marshal(posts)
+		w.Write(jsonData) 
+	}
+}
+
+func comments(w http.ResponseWriter, req *http.Request) {
+	if !alreadyLoggedIn(req) {
+		http.Redirect(w, req, "/", http.StatusForbidden)
+		return
+	}
+
+	if req.Method == http.MethodGet {
+		posts := Comments{
+			Comments: data.PostsComments,
+		}
+		jsonData, _ := json.Marshal(posts)
+		w.Write(jsonData) 
+	}
 }

@@ -5,8 +5,12 @@ import '../mutators/incrementLike';
 import '../mutators/initData';
 import '../mutators/formFieldChange';
 import '../mutators/login';
+import '../mutators/posts';
+import '../mutators/comments';
 
 import '../orchestrators/login';
+import '../orchestrators/posts';
+import '../orchestrators/comments';
 
 // const comments = {
 //     "BAhvZrRwcfu":[
@@ -481,6 +485,7 @@ import '../orchestrators/login';
 // ];
 
 const sampleData = {
+    endpoints: {},
     comments: {},
     posts: [],
     login: null,
