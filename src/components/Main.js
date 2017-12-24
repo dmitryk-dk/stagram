@@ -13,7 +13,7 @@ const Main = () => (
     <div>
         <button className={'btn btn-primary btn-block'} onClick={()=>logoutRequest()}>Logout</button>
         <Link to="/posts">
-            <h1 onClick={getData}>Danger! Posts</h1>
+            <h1 onClick={getData}>Click equal Posts</h1>
         </Link>
         <Switch>
             <Route exact path="/posts" component={PhotoGrid} />
