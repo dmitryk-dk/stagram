@@ -1,19 +1,19 @@
 import {mutator, action} from 'satcheljs';
 import getStore from '../store/store';
-import {loginSuccess, loginFail} from "../actions/login";
+import {signupSuccess, signupFail} from "../actions/signup";
 import { createHashHistory } from 'history';
 
 const history = createHashHistory();
 
-mutator(loginSuccess, () => {
+mutator(signupSuccess, () => {
     const store = getStore();
     store.isAuthed = true;
     store.isLoggedIn = true;
     history.replace('/');
 });
 
-mutator(loginFail, () => {
+mutator(signupFail, () => {
     const store = getStore();
-    store.isAuthed = false;
-    store.isLoggedIn = false;
+    //store.isAuthed = false;
+    //store.isLoggedIn = false;
 })

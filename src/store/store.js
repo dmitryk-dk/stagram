@@ -7,10 +7,14 @@ import '../mutators/formFieldChange';
 import '../mutators/login';
 import '../mutators/posts';
 import '../mutators/comments';
+import '../mutators/signup';
+import '../mutators/logout';
 
 import '../orchestrators/login';
 import '../orchestrators/posts';
 import '../orchestrators/comments';
+import '../orchestrators/signup';
+import '../orchestrators/logout';
 
 // const comments = {
 //     "BAhvZrRwcfu":[
@@ -491,6 +495,8 @@ const sampleData = {
     login: null,
     password: null,
     isAuthed: false,
+    isLoggedIn: false,
+    nickName: null,
 };
 
 export default createStore('StagramStore', sampleData);

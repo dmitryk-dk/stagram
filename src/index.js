@@ -7,7 +7,6 @@ import initData from './actions/initData';
 // satcheljs components
 import {trace} from 'satcheljs-trace';
 import {applyMiddleware, ActionMessage, DispatchFunction} from 'satcheljs';
-import devtool from 'satcheljs-react-devtools';
 
 // react hot reload component
 import { AppContainer } from 'react-hot-loader';
@@ -41,12 +40,10 @@ const render = Component => {
 };
 
 const init =() => {
-    // Optionally enable some dev tools based on a URL parameter
-    const regex = new RegExp("[\\?&]devtools=");
-    const url = window.location.href.toLowerCase();
-    if (regex.exec(url)) {
-        applyMiddleware(devtool, trace);
-        traceMiddleware(DispatchFunction, ActionMessage);
+    // Optionally enable some dev tools
+    const assembly = process.env.NODE_ENV;
+    if (assembly !== 'production') {
+        applyMiddleware(require('satcheljs-react-devtools').default, trace);
     }
 
     // Render the app

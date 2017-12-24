@@ -10,16 +10,9 @@ const Login = () => {
     const store = getStore();
     const login = store.login;
     const password = store.password;
-    const isAuthed = store.isAuthed;
     return (
         <div className={'d-flex align-items-center justify-content-center flex-column'}>
             <h1>Reduxstagram</h1>
-            {
-                !isAuthed ?  
-                    <div className={'alert alert-danger'}>
-                        Sorry, we can't find your account! Please signup to our application
-                    </div>: null
-            }
             <form onSubmit={(e) => submit(e)} >
                 <div className="form-group">
                     <label htmlFor="login">Login</label>
@@ -52,7 +45,10 @@ const Login = () => {
                         onChange={(e) => formFieldChange(e.target)}  
                     />
                 </div>
-                <button type="submit" className="btn btn-primary">Submit</button>
+                <button type="submit" className="btn btn-success btn-block mb-2">Login</button>
+                <Link to="/signup">
+                    <button type="button" className="btn btn-primary btn-block">Signup</button>
+                </Link>
             </form>
         </div>
            

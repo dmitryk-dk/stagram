@@ -6,6 +6,9 @@ import { createHashHistory } from 'history';
 const history = createHashHistory();
 
 mutator(initData, ({endpoints, isAuthed}) => {
+    if (isAuthed) {
+        history.replace('/');
+    }
     const store = getStore();
     store.endpoints = endpoints;
     store.isAuthed = isAuthed;
