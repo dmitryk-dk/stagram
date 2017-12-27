@@ -7,6 +7,7 @@ import initData from './actions/initData';
 // satcheljs components
 import {trace} from 'satcheljs-trace';
 import {applyMiddleware, ActionMessage, DispatchFunction} from 'satcheljs';
+//import mobxReactDevtools from "mobx-react-devtools";
 
 // react hot reload component
 import { AppContainer } from 'react-hot-loader';
@@ -39,11 +40,18 @@ const render = Component => {
     );
 };
 
+const initializeMobxDevTools = () => {
+    const targetDiv = document.createElement("div");
+    document.body.appendChild(targetDiv);
+    ReactDOM.render(React.createElement(require("mobx-react-devtools").default, null), targetDiv);
+}
+
 const init =() => {
     // Optionally enable some dev tools
     const assembly = process.env.NODE_ENV;
     if (assembly !== 'production') {
-        applyMiddleware(require('satcheljs-react-devtools').default, trace);
+        initializeMobxDevTools();
+        applyMiddleware(traceMiddleware, trace);
     }
 
     // Render the app
