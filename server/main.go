@@ -2,6 +2,7 @@ package main
 
 import (
 	"net/http"
+	"time"
 	"golang.org/x/crypto/bcrypt"
 	"github.com/dmitryk-dk/stagram/server/data"
 	appHandlers "github.com/dmitryk-dk/stagram/server/handlers"	
@@ -10,6 +11,7 @@ import (
 func init() {
 	bp, _ := bcrypt.GenerateFromPassword([]byte("password"), bcrypt.MinCost)
 	data.DbUsers["test@test.com"] = data.User{"test@test.com", string(bp), "James"}
+	appHandlers.DbSessionsCleaned = time.Now()
 }
 
 func main() {

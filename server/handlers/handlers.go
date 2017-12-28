@@ -1,11 +1,13 @@
 package handlers
 
 import (
+	"fmt"
 	"io/ioutil"
 	"encoding/json"
 	"html/template"
 	"log"
 	"net/http"
+	"time"
 	"os"
 	"os/signal"
 	"syscall"
@@ -13,6 +15,9 @@ import (
 	"github.com/dmitryk-dk/stagram/server/data"
 	"github.com/satori/go.uuid"
 )
+
+const sessionLength = 60
+var DbSessionsCleaned time.Time
 
 func PrepareShutdown() {
 	sig := make(chan os.Signal, 1)
@@ -39,7 +44,11 @@ func ServeTemplate(w http.ResponseWriter, req *http.Request) {
 			IsAuthed: AlreadyLoggedIn(req),
 		},
 	}
-	jsonData, _ := json.Marshal(endpoints)
+	jsonData, err := json.Marshal(endpoints)
+	if err != nil {
+		http.Error(w, "Error json format", http.StatusInternalServerError)
+		return
+	}
 	tmpl.ExecuteTemplate(w, "index.html",string(jsonData))
 }
 
@@ -75,9 +84,10 @@ func Login(w http.ResponseWriter, req *http.Request) {
 		cookie := &http.Cookie{
 			Name: "session",
 			Value: sessionId.String(),
+			MaxAge: sessionLength,
 		}
 		http.SetCookie(w, cookie)
-		data.DbSessions[cookie.Value] = credentials.UserName
+		data.DbSessions[cookie.Value] = data.Session{credentials.UserName, time.Now()}
 		http.Redirect(w, req, "/posts", http.StatusAccepted)
 		return
 	}
@@ -89,8 +99,12 @@ func AlreadyLoggedIn(req *http.Request) bool {
 		return false
 	}
 	
-	un := data.DbSessions[c.Value]
-	_, ok := data.DbUsers[un]
+	session, ok := data.DbSessions[c.Value]
+	if ok {
+		session.LastActivity = time.Now()
+		data.DbSessions[c.Value] = session
+	}
+	_, ok = data.DbUsers[session.UserName]
 	return ok
 }
 
@@ -99,7 +113,11 @@ func Posts(w http.ResponseWriter, req *http.Request) {
 		posts := data.PostsData{
 			Posts: data.Posts,
 		}
-		jsonData, _ := json.Marshal(posts)
+		jsonData, err := json.Marshal(posts)
+		if err != nil {
+			http.Error(w, "Error json format", http.StatusInternalServerError)
+			return
+		}
 		w.Write(jsonData) 
 	}
 }
@@ -109,7 +127,11 @@ func Comments(w http.ResponseWriter, req *http.Request) {
 		posts := data.CommentsData{
 			Comments: data.PostsComments,
 		}
-		jsonData, _ := json.Marshal(posts)
+		jsonData, err := json.Marshal(posts)
+		if err != nil {
+			http.Error(w, "Error json format", http.StatusInternalServerError)
+			return
+		}
 		w.Write(jsonData) 
 	}
 }
@@ -139,9 +161,10 @@ func Signup(w http.ResponseWriter, req *http.Request) {
 		cookie := &http.Cookie{
 			Name:  "session",
 			Value: sID.String(),
+			MaxAge: sessionLength,
 		}
 		http.SetCookie(w, cookie)
-		data.DbSessions[cookie.Value] = user.UserName
+		data.DbSessions[cookie.Value] = data.Session{user.UserName, time.Now()}
 		data.DbUsers[user.UserName] = user
 		http.Redirect(w, req, "/posts", http.StatusAccepted)
 	}
@@ -163,5 +186,18 @@ func Logout(w http.ResponseWriter, req *http.Request) {
 	}
 	http.SetCookie(w, cookie)
 
+	if time.Now().Sub(DbSessionsCleaned) > (time.Second * 60) {
+		go CleanSessions()
+	}
+
 	http.Redirect(w, req, "/login", http.StatusOK)
+}
+
+func CleanSessions() {
+	for k, v := range data.DbSessions {
+		if time.Now().Sub(v.LastActivity) > (time.Second * 60) {
+			delete(data.DbSessions, k)
+		}
+	}
+	DbSessionsCleaned = time.Now()
 }

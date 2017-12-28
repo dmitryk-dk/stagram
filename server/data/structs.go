@@ -1,5 +1,9 @@
 package data
 
+import (
+	"time"
+)
+
 type User struct {
 	UserName string `json:"login"`
 	Password string `json:"password"`
@@ -36,5 +40,10 @@ type InitData struct {
 	Authorization
 }
 
+type Session struct {
+	UserName 	 string
+	LastActivity time.Time
+}
+
 var DbUsers = map[string]User{}
-var DbSessions = map[string]string{}
+var DbSessions = map[string]Session{}
