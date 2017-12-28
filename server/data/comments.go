@@ -5,10 +5,6 @@ type Comment struct {
 	User	string `json:"user"`
 }
 
-type Comments struct {
-	//Comment []Comment
-}
-
 var PostsComments = map[string][]Comment{
 	"BAhvZrRwcfu": []Comment{
 				Comment{
