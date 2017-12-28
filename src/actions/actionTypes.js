@@ -1,0 +1,26 @@
+
+export const COMMENTS_REQUEST = 'COMMENTS_REQUEST';
+export const COMMENTS_SUCCESS = 'COMMENTS_SUCCESS';
+export const COMMENTS_FAIL = 'COMMENTS_FAIL';
+
+export const FORM_FIELD_CHANGE = 'FORM_FIELD_CHANGE';
+
+export const INCREMENT_LIKE = 'INCREMENT_LIKE';
+
+export const INIT_DATA = 'INIT_DATA';
+
+export const LOGIN_REQUEST = 'LOGIN_REQUEST';
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+export const LOGIN_FAIL = 'LOGIN_FAIL';
+
+export const LOGOUT_REQUEST = 'LOGOUT_REQUEST';
+export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
+export const LOGOUT_FAIL = 'LOGOUT_FAIL';
+
+export const POSTS_REQUEST = 'POSTS_REQUEST';
+export const POSTS_SUCCESS = 'POSTS_SUCCESS';
+export const POSTS_FAIL = 'POSTS_FAIL';
+
+export const SIGNUP_REQUEST = 'SIGNUP_REQUEST';
+export const SIGNUP_SUCCESS = 'SIGNUP_SUCCESS';
+export const SIGNUP_FAIL = 'SIGNUP_FAIL';
