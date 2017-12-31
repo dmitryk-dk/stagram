@@ -38,6 +38,7 @@ func ServeTemplate(w http.ResponseWriter, req *http.Request) {
 			Posts: "/posts",
 			Comments: "/comments",
 			Logout: "/logout",
+			Comment: "/comment",
 		},
 		data.Authorization{
 			IsAuthed: AlreadyLoggedIn(req),
@@ -199,4 +200,19 @@ func CleanSessions() {
 		}
 	}
 	DbSessionsCleaned = time.Now()
+}
+
+func Comment(w http.ResponseWriter, req *http.Request) {
+	var comments data.CommentsData
+	if req.Method == http.MethodPost {
+		body, err := ioutil.ReadAll(req.Body)
+		err = json.Unmarshal(body, &comments)
+		defer req.Body.Close()
+		if err != nil {
+			http.Error(w, "Error json format", http.StatusInternalServerError)
+			return
+		}
+
+
+	}
 }

@@ -18,7 +18,8 @@ const Photo = ({post}) => {
                     <img
                         className="grid-photo"
                         src={post.display_src}
-                        alt={post.caption} />
+                        alt={post.caption} 
+                    />
                 </Link>
                 <CSSTransitionGroup
                     transitionName="like"

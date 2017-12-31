@@ -29,6 +29,7 @@ type Endpoints struct {
 	Comments string `json:"comments"`
 	Signup 	 string `json:"signup"`
 	Logout 	 string `json:"logout"`
+	Comment  string `json:"comment"`
 }
 
 type Authorization struct {
