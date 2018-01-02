@@ -9,19 +9,24 @@ import PhotoGrid from './PhotoGrid.js';
 import Signup from './Signup';
 import getStore from '../store/store';
 
-const Main = () => (
-    <div>
-        <button className={'btn btn-primary btn-block'} onClick={()=>logoutRequest()}>Logout</button>
-        <Link to="/posts">
-            <h1 onClick={getData}>Click equal Posts</h1>
-        </Link>
-        <Switch>
-            <Route exact path="/posts" component={PhotoGrid} />
-            <Route exact path="/view/:postId" component={Single} />
-            <Route exact path="/signup" component={Signup} />
-        </Switch>
-    </div>
-);
+const Main = () => {
+    const store = getStore();
+    return (
+        <div>
+            <button className={'btn btn-primary btn-block'} onClick={()=>logoutRequest()}>Logout</button>
+            <Link to="/posts">
+                <h1 onClick={getData}>Click equal Posts</h1>
+            </Link>
+            <Switch>
+                <Route exact path="/posts" render={(props) => <PhotoGrid store={store} {...props}/>} />
+                <Route exact path="/view/:postId" render={(props) => <Single store={store} {...props} />} />
+                <Route exact path="/signup" render={(props) => <Signup store={store} {...props}/>} />
+            </Switch>
+        </div>
+    );
+}
+    
+
 
 const getData = () => {
     postsRequest();
