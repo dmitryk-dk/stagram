@@ -80,7 +80,11 @@ func Login(w http.ResponseWriter, req *http.Request) {
 			return
 		}
 
-		sessionId := uuid.NewV4()
+		sessionId, err := uuid.NewV4()
+		if err != nil {
+			http.Error(w, "Cannot set uuid", http.StatusInternalServerError)
+			return
+		}
 		cookie := &http.Cookie{
 			Name: "session",
 			Value: sessionId.String(),
@@ -157,7 +161,11 @@ func Signup(w http.ResponseWriter, req *http.Request) {
 			return
 		}
 
-		sID := uuid.NewV4()
+		sID, err := uuid.NewV4()
+		if err != nil {
+			http.Error(w, "Cannot set uuid", http.StatusInternalServerError)
+			return
+		}
 		cookie := &http.Cookie{
 			Name:  "session",
 			Value: sID.String(),
